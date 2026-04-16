@@ -1,0 +1,18 @@
+.profile-page { max-width: 700px; }
+.profile-form { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
+.profile-form:hover { transform: none; }
+.profile-section h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; }
+.radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.radio-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: var(--radius-md);
+  background: var(--bg-input); border: 1px solid var(--border-subtle);
+  cursor: pointer; font-size: 0.88rem; transition: all var(--transition-fast);
+}
+.radio-item input { display: none; }
+.radio-item:hover { border-color: var(--border-medium); }
+.radio-item.selected { border-color: var(--color-primary); background: rgba(108, 92, 231, 0.1); color: var(--color-primary-light); }
+.radio-item.small { padding: 8px 14px; font-size: 0.82rem; }
+.toggle-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.92rem; }
+.toggle-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--color-primary); }
+.profile-form select.input { background: var(--bg-input); color: var(--text-primary); }

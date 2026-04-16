@@ -1,0 +1,18 @@
+.progress-page { max-width: 900px; }
+.progress-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+.ps-item { text-align: center; padding: 20px; }
+.ps-item:hover { transform: none; }
+.ps-value { display: block; font-size: 1.8rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.ps-label { font-size: 0.8rem; color: var(--text-muted); }
+
+.nodes-constellation { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 20px; }
+.node-card { padding: 18px; border-left: 3px solid; animation: slideUp 0.4s ease-out both; }
+.node-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.node-label { font-weight: 600; font-size: 0.95rem; }
+.node-mastery { font-size: 0.75rem; font-weight: 600; }
+.node-bar { height: 6px; background: var(--bg-secondary); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 10px; }
+.node-bar-fill { height: 100%; border-radius: var(--radius-full); transition: width 0.8s ease-out; }
+.node-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+.node-cat { padding: 2px 8px; background: var(--bg-secondary); border-radius: var(--radius-sm); }
+
+@media (max-width: 768px) { .progress-stats-row { grid-template-columns: 1fr; } }
