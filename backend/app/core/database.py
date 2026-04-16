@@ -5,6 +5,7 @@ Falls back to SQLite for development when DATABASE_URL is not set.
 """
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
 from app.core.config import settings
 
 # Determine database URL — fall back to async SQLite for local dev
@@ -15,13 +16,11 @@ if not _db_url or _db_url == "postgresql+asyncpg://" or "YOUR_DB_PASSWORD" in _d
 else:
     _engine_kwargs = {
         "echo": settings.debug,
-        "pool_size": 20,
-        "max_overflow": 10,
-        "pool_pre_ping": True,
+        "poolclass": NullPool,
         # Supabase uses pgbouncer in transaction mode — disable prepared statements
         "connect_args": {
-            "statement_cache_size": 0,
             "prepared_statement_cache_size": 0,
+            "statement_cache_size": 0,
         },
     }
 
