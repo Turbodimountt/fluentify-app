@@ -10,21 +10,17 @@ from app.core.config import settings
 
 # Determine database URL — fall back to async SQLite for local dev
 _db_url = settings.database_url
-if not _db_url or _db_url == "postgresql+asyncpg://" or "YOUR_DB_PASSWORD" in _db_url:
+if not _db_url or "YOUR_DB_PASSWORD" in _db_url:
     _db_url = "sqlite+aiosqlite:///./fluentify_dev.db"
     _engine_kwargs = {"echo": settings.debug}
 else:
-    # Use original pooler URL (port 6543) but disable all caching
-    # to avoid DuplicatePreparedStatementError in Transaction Mode.
+    # Use psycopg (v3) which is natively compatible with PgBouncer
+    if "asyncpg" in _db_url:
+        _db_url = _db_url.replace("asyncpg", "psycopg")
+    
     _engine_kwargs = {
         "echo": settings.debug,
         "poolclass": NullPool,
-        "connect_args": {
-            "statement_cache_size": 0,
-        },
-        "execution_options": {
-            "compiled_cache": None
-        }
     }
 
 engine = create_async_engine(_db_url, **_engine_kwargs)
