@@ -15,6 +15,8 @@ services:
         value: "*"
       - key: DEBUG
         value: "false"
+      - key: PYTHON_VERSION
+        value: "3.11.10"
 
   # Frontend: React (Static Site)
   - type: web
@@ -25,7 +27,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://fluentify-backend.onrender.com
+        value: https://fluentify-backend-gg0i.onrender.com
     routes:
       - type: rewrite
         source: /*
