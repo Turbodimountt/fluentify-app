@@ -25,10 +25,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: fluentify-backend
-          type: web
-          property: host
+        value: https://fluentify-backend.onrender.com
     routes:
       - type: rewrite
         source: /*
