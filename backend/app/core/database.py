@@ -14,6 +14,11 @@ if not _db_url or _db_url == "postgresql+asyncpg://" or "YOUR_DB_PASSWORD" in _d
     _db_url = "sqlite+aiosqlite:///./fluentify_dev.db"
     _engine_kwargs = {"echo": settings.debug}
 else:
+    # Force disable prepared statements for PgBouncer/Supabase
+    if "prepared_statement_cache_size" not in _db_url:
+        separator = "&" if "?" in _db_url else "?"
+        _db_url += f"{separator}prepared_statement_cache_size=0"
+
     _engine_kwargs = {
         "echo": settings.debug,
         "poolclass": NullPool,
