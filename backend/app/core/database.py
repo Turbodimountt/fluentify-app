@@ -14,21 +14,17 @@ if not _db_url or _db_url == "postgresql+asyncpg://" or "YOUR_DB_PASSWORD" in _d
     _db_url = "sqlite+aiosqlite:///./fluentify_dev.db"
     _engine_kwargs = {"echo": settings.debug}
 else:
-    # Transformation: If using Supabase Pooler (6543), switch to Direct Connection (5432)
-    # This solves the DuplicatePreparedStatementError permanently.
-    if "pooler.supabase.com:6543" in _db_url:
-        # Extract project ref from the current host (e.g., postgres.REF@host)
-        try:
-            _db_url = _db_url.replace(":6543", ":5432")
-            _db_url = _db_url.replace("aws-1-us-east-2.pooler.supabase.com", "db.ogdemdghhuntuuxvopdd.supabase.co")
-        except:
-            pass
-    
+    # Use original pooler URL (port 6543) but disable all caching
+    # to avoid DuplicatePreparedStatementError in Transaction Mode.
     _engine_kwargs = {
         "echo": settings.debug,
-        "pool_size": 10,
-        "max_overflow": 5,
-        "pool_pre_ping": True,
+        "poolclass": NullPool,
+        "connect_args": {
+            "statement_cache_size": 0,
+        },
+        "execution_options": {
+            "compiled_cache": None
+        }
     }
 
 engine = create_async_engine(_db_url, **_engine_kwargs)
